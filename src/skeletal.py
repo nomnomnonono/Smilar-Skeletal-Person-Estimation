@@ -1,4 +1,5 @@
 import argparse
+import os
 
 import cv2
 import mediapipe as mp
@@ -11,6 +12,8 @@ class FaceMesh:
     def __init__(self, config):
         self.config = OmegaConf.load(config)
         self.df = pd.read_csv(self.config.path_csv)
+        if os.path.exists(self.config.path_skeletal):
+            self.reference = np.load(self.config.path_skeletal)
 
     def normalize(self, landmarks):
         output = []
@@ -47,6 +50,13 @@ class FaceMesh:
             landmark = self.get_facemesh(self.df.iloc[i]["filepath"])
             landmarks.append(landmark)
         np.save(self.config.path_skeletal, np.array(landmarks))
+
+    def estimate_similar_person(self, path, topK):
+        facemesh = self.get_facemesh(path)
+        diff = abs(self.reference - facemesh).mean((1, 2))
+        rank = np.argsort(diff)[0 : int(topK)]
+        top = self.df.iloc[rank]
+        return top.drop("filepath", axis=1)
 
 
 def argparser():
