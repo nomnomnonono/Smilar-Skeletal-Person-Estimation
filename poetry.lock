@@ -1,10 +1,10 @@
 [[package]]
-name = "absl-py"
-version = "1.4.0"
-description = "Abseil Python Common Libraries, see https://github.com/abseil/abseil-py."
+name = "antlr4-python3-runtime"
+version = "4.9.3"
+description = "ANTLR 4.9.3 runtime for Python 3.7"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = "*"
 
 [[package]]
 name = "anyio"
@@ -163,6 +163,25 @@ webencodings = "*"
 css = ["tinycss2 (>=1.1.0,<1.2)"]
 
 [[package]]
+name = "bs4"
+version = "0.0.1"
+description = "Dummy package for Beautiful Soup"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+beautifulsoup4 = "*"
+
+[[package]]
+name = "certifi"
+version = "2022.12.7"
+description = "Python package for providing Mozilla's CA Bundle."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "cffi"
 version = "1.15.1"
 description = "Foreign Function Interface for Python calling C code."
@@ -174,10 +193,18 @@ python-versions = "*"
 pycparser = "*"
 
 [[package]]
+name = "charset-normalizer"
+version = "3.1.0"
+description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
+category = "main"
+optional = false
+python-versions = ">=3.7.0"
+
+[[package]]
 name = "click"
 version = "8.1.3"
 description = "Composable command line interface toolkit"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
@@ -281,6 +308,14 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
+name = "dlib"
+version = "19.24.1"
+description = "A toolkit for making real world machine learning and data analysis applications"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "executing"
 version = "1.2.0"
 description = "Get the currently executing AST node of a frame, and other information"
@@ -290,6 +325,29 @@ python-versions = "*"
 
 [package.extras]
 tests = ["asttokens", "pytest", "littleutils", "rich"]
+
+[[package]]
+name = "face-recognition"
+version = "1.3.0"
+description = "Recognize faces from Python or from the command line"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Click = ">=6.0"
+dlib = ">=19.7"
+face-recognition-models = ">=0.3.0"
+numpy = "*"
+Pillow = "*"
+
+[[package]]
+name = "face-recognition-models"
+version = "0.3.0"
+description = "Models used by the face_recognition package."
+category = "main"
+optional = false
+python-versions = "*"
 
 [[package]]
 name = "fastjsonschema"
@@ -329,14 +387,6 @@ flake8 = ">=3.0.0"
 
 [package.extras]
 dev = ["tox", "coverage", "hypothesis", "hypothesmith (>=0.2)", "pre-commit", "pytest"]
-
-[[package]]
-name = "flatbuffers"
-version = "23.3.3"
-description = "The FlatBuffers serialization format for Python"
-category = "main"
-optional = false
-python-versions = "*"
 
 [[package]]
 name = "fonttools"
@@ -759,24 +809,6 @@ optional = false
 python-versions = "*"
 
 [[package]]
-name = "mediapipe"
-version = "0.9.3.0"
-description = "MediaPipe is the simplest way for researchers and developers to build world-class ML solutions and applications for mobile, edge, cloud and the web."
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-absl-py = "*"
-attrs = ">=19.1.0"
-flatbuffers = ">=2.0"
-matplotlib = "*"
-numpy = "*"
-opencv-contrib-python = "*"
-protobuf = ">=3.11,<4"
-sounddevice = ">=0.4.4"
-
-[[package]]
 name = "mistune"
 version = "2.0.5"
 description = "A sane Markdown parser with useful plugins and renderers"
@@ -974,7 +1006,19 @@ optional = false
 python-versions = ">=3.8"
 
 [[package]]
-name = "opencv-contrib-python"
+name = "omegaconf"
+version = "2.3.0"
+description = "A flexible configuration library"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+antlr4-python3-runtime = ">=4.9.0,<4.10.0"
+PyYAML = ">=5.1.0"
+
+[[package]]
+name = "opencv-python"
 version = "4.7.0.72"
 description = "Wrapper package for OpenCV python bindings."
 category = "main"
@@ -999,6 +1043,47 @@ description = "Core utilities for Python packages"
 category = "main"
 optional = false
 python-versions = ">=3.7"
+
+[[package]]
+name = "pandas"
+version = "2.0.1"
+description = "Powerful data structures for data analysis, time series, and statistics"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+numpy = [
+    {version = ">=1.20.3", markers = "python_version < \"3.10\""},
+    {version = ">=1.21.0", markers = "python_version >= \"3.10\""},
+    {version = ">=1.23.2", markers = "python_version >= \"3.11\""},
+]
+python-dateutil = ">=2.8.2"
+pytz = ">=2020.1"
+tzdata = ">=2022.1"
+
+[package.extras]
+all = ["beautifulsoup4 (>=4.9.3)", "bottleneck (>=1.3.2)", "brotlipy (>=0.7.0)", "fastparquet (>=0.6.3)", "fsspec (>=2021.07.0)", "gcsfs (>=2021.07.0)", "html5lib (>=1.1)", "hypothesis (>=6.34.2)", "jinja2 (>=3.0.0)", "lxml (>=4.6.3)", "matplotlib (>=3.6.1)", "numba (>=0.53.1)", "numexpr (>=2.7.3)", "odfpy (>=1.4.1)", "openpyxl (>=3.0.7)", "pandas-gbq (>=0.15.0)", "psycopg2 (>=2.8.6)", "pyarrow (>=7.0.0)", "pymysql (>=1.0.2)", "PyQt5 (>=5.15.1)", "pyreadstat (>=1.1.2)", "pytest (>=7.0.0)", "pytest-xdist (>=2.2.0)", "pytest-asyncio (>=0.17.0)", "python-snappy (>=0.6.0)", "pyxlsb (>=1.0.8)", "qtpy (>=2.2.0)", "scipy (>=1.7.1)", "s3fs (>=2021.08.0)", "SQLAlchemy (>=1.4.16)", "tables (>=3.6.1)", "tabulate (>=0.8.9)", "xarray (>=0.21.0)", "xlrd (>=2.0.1)", "xlsxwriter (>=1.4.3)", "zstandard (>=0.15.2)"]
+aws = ["s3fs (>=2021.08.0)"]
+clipboard = ["PyQt5 (>=5.15.1)", "qtpy (>=2.2.0)"]
+compression = ["brotlipy (>=0.7.0)", "python-snappy (>=0.6.0)", "zstandard (>=0.15.2)"]
+computation = ["scipy (>=1.7.1)", "xarray (>=0.21.0)"]
+excel = ["odfpy (>=1.4.1)", "openpyxl (>=3.0.7)", "pyxlsb (>=1.0.8)", "xlrd (>=2.0.1)", "xlsxwriter (>=1.4.3)"]
+feather = ["pyarrow (>=7.0.0)"]
+fss = ["fsspec (>=2021.07.0)"]
+gcp = ["gcsfs (>=2021.07.0)", "pandas-gbq (>=0.15.0)"]
+hdf5 = ["tables (>=3.6.1)"]
+html = ["beautifulsoup4 (>=4.9.3)", "html5lib (>=1.1)", "lxml (>=4.6.3)"]
+mysql = ["SQLAlchemy (>=1.4.16)", "pymysql (>=1.0.2)"]
+output_formatting = ["jinja2 (>=3.0.0)", "tabulate (>=0.8.9)"]
+parquet = ["pyarrow (>=7.0.0)"]
+performance = ["bottleneck (>=1.3.2)", "numba (>=0.53.1)", "numexpr (>=2.7.1)"]
+plot = ["matplotlib (>=3.6.1)"]
+postgresql = ["SQLAlchemy (>=1.4.16)", "psycopg2 (>=2.8.6)"]
+spss = ["pyreadstat (>=1.1.2)"]
+sql-other = ["SQLAlchemy (>=1.4.16)"]
+test = ["hypothesis (>=6.34.2)", "pytest (>=7.0.0)", "pytest-xdist (>=2.2.0)", "pytest-asyncio (>=0.17.0)"]
+xml = ["lxml (>=4.6.3)"]
 
 [[package]]
 name = "pandocfilters"
@@ -1092,14 +1177,6 @@ python-versions = ">=3.7.0"
 
 [package.dependencies]
 wcwidth = "*"
-
-[[package]]
-name = "protobuf"
-version = "3.20.3"
-description = "Protocol Buffers"
-category = "main"
-optional = false
-python-versions = ">=3.7"
 
 [[package]]
 name = "psutil"
@@ -1228,6 +1305,14 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "pytz"
+version = "2023.3"
+description = "World timezone definitions, modern and historical"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "pywin32"
 version = "306"
 description = "Python for Window Extensions"
@@ -1261,6 +1346,24 @@ python-versions = ">=3.6"
 
 [package.dependencies]
 cffi = {version = "*", markers = "implementation_name == \"pypy\""}
+
+[[package]]
+name = "requests"
+version = "2.30.0"
+description = "Python HTTP for Humans."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+certifi = ">=2017.4.17"
+charset-normalizer = ">=2,<4"
+idna = ">=2.5,<4"
+urllib3 = ">=1.21.1,<3"
+
+[package.extras]
+socks = ["PySocks (>=1.5.6,!=1.5.7)"]
+use_chardet_on_py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "rfc3339-validator"
@@ -1334,20 +1437,6 @@ description = "Sniff out which async library your code is running under"
 category = "main"
 optional = false
 python-versions = ">=3.7"
-
-[[package]]
-name = "sounddevice"
-version = "0.4.6"
-description = "Play and Record Sound with Python"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-
-[package.dependencies]
-CFFI = ">=1.0"
-
-[package.extras]
-numpy = ["numpy"]
 
 [[package]]
 name = "soupsieve"
@@ -1430,6 +1519,23 @@ optional = false
 python-versions = ">= 3.8"
 
 [[package]]
+name = "tqdm"
+version = "4.65.0"
+description = "Fast, Extensible Progress Meter"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+colorama = {version = "*", markers = "platform_system == \"Windows\""}
+
+[package.extras]
+dev = ["py-make (>=0.1.0)", "twine", "wheel"]
+notebook = ["ipywidgets (>=6)"]
+slack = ["slack-sdk"]
+telegram = ["requests"]
+
+[[package]]
 name = "traitlets"
 version = "5.9.0"
 description = "Traitlets Python configuration system"
@@ -1458,6 +1564,14 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "tzdata"
+version = "2023.3"
+description = "Provider of IANA time zone data"
+category = "main"
+optional = false
+python-versions = ">=2"
+
+[[package]]
 name = "unidiff"
 version = "0.7.5"
 description = "Unified diff parsing/metadata extraction library."
@@ -1475,6 +1589,20 @@ python-versions = ">=3.6"
 
 [package.extras]
 dev = ["mypy", "flake8 (<4.0.0)", "flake8-annotations", "flake8-bugbear", "flake8-commas", "flake8-comprehensions", "flake8-continuation", "flake8-datetimez", "flake8-docstrings", "flake8-import-order", "flake8-literal", "flake8-noqa", "flake8-requirements", "flake8-type-annotations", "flake8-use-fstring", "pep8-naming"]
+
+[[package]]
+name = "urllib3"
+version = "2.0.2"
+description = "HTTP library with thread-safe connection pooling, file post, and more."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+brotli = ["brotli (>=1.0.9)", "brotlicffi (>=0.8.0)"]
+secure = ["certifi", "cryptography (>=1.9)", "idna (>=2.0.0)", "pyopenssl (>=17.1.0)", "urllib3-secure-extra"]
+socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
+zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "wcwidth"
@@ -1532,10 +1660,10 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "flake8 (<5)", "pytest-co
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "4901c496e76bca3c8efc1020c1839b551e17e24d631fb611528f32b4a4a7af7c"
+content-hash = "5202c474505b020a68ea7002565be06aa741680ac0e74faa9b9d3b0c1c0ab773"
 
 [metadata.files]
-absl-py = []
+antlr4-python3-runtime = []
 anyio = []
 appnope = []
 argon2-cffi = []
@@ -1547,7 +1675,10 @@ backcall = []
 beautifulsoup4 = []
 black = []
 bleach = []
+bs4 = []
+certifi = []
 cffi = []
+charset-normalizer = []
 click = []
 colorama = []
 colorlog = []
@@ -1558,11 +1689,13 @@ dacite = []
 debugpy = []
 decorator = []
 defusedxml = []
+dlib = []
 executing = []
+face-recognition = []
+face-recognition-models = []
 fastjsonschema = []
 flake8 = []
 flake8-bugbear = []
-flatbuffers = []
 fonttools = []
 fqdn = []
 gitdb = []
@@ -1590,7 +1723,6 @@ markupsafe = []
 matplotlib = []
 matplotlib-inline = []
 mccabe = []
-mediapipe = []
 mistune = []
 mypy = []
 mypy-extensions = []
@@ -1602,8 +1734,10 @@ nest-asyncio = []
 notebook = []
 notebook-shim = []
 numpy = []
-opencv-contrib-python = []
+omegaconf = []
+opencv-python = []
 packaging = []
+pandas = []
 pandocfilters = []
 parso = []
 pathspec = []
@@ -1613,7 +1747,6 @@ pillow = []
 platformdirs = []
 prometheus-client = []
 prompt-toolkit = []
-protobuf = []
 psutil = []
 ptyprocess = []
 pure-eval = []
@@ -1626,10 +1759,12 @@ pyrsistent = []
 pysen = []
 python-dateutil = []
 python-json-logger = []
+pytz = []
 pywin32 = []
 pywinpty = []
 pyyaml = []
 pyzmq = []
+requests = []
 rfc3339-validator = []
 rfc3986-validator = []
 send2trash = []
@@ -1637,7 +1772,6 @@ setuptools-scm = []
 six = []
 smmap = []
 sniffio = []
-sounddevice = []
 soupsieve = []
 stack-data = []
 terminado = []
@@ -1645,11 +1779,14 @@ tinycss2 = []
 tomli = []
 tomlkit = []
 tornado = []
+tqdm = []
 traitlets = []
 typed-ast = []
 typing-extensions = []
+tzdata = []
 unidiff = []
 uri-template = []
+urllib3 = []
 wcwidth = []
 webcolors = []
 webencodings = []

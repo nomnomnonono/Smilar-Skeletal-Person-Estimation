@@ -9,7 +9,7 @@ lint:
 .PHONY: setup
 setup:
 	poetry install
-	poetry run pip install git+https://github.com/facebookresearch/segment-anything.git
+	poetry run pip install mediapipe
 
 .PHONY: run
 run:
