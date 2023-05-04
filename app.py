@@ -8,9 +8,7 @@ with gr.Blocks() as demo:
     with gr.Row():
         with gr.Column(scale=1):
             input = gr.Image(type="filepath", label="Input image")
-            dropdown = gr.Dropdown(
-                [5, 10, 20, 30, 40, 50], value="20", label="Top K"
-            )
+            dropdown = gr.Dropdown([5, 10, 20, 30, 40, 50], value="20", label="Top K")
             button = gr.Button("Estimate")
         with gr.Column(scale=2):
             output = gr.Dataframe()
