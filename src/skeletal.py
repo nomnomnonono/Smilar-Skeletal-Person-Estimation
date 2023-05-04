@@ -52,6 +52,7 @@ class FaceMesh:
         np.save(self.config.path_skeletal, np.array(landmarks))
 
     def estimate_similar_person(self, path, topK):
+        print(path)
         facemesh = self.get_facemesh(path)
         diff = abs(self.reference - facemesh).mean((1, 2))
         rank = np.argsort(diff)[0 : int(topK)]
