@@ -7,6 +7,12 @@ authors = ["nomnomnonono <nozomu.koujiguchi1204@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 notebook = "^6.5.3"
+requests = "^2.30.0"
+bs4 = "^0.0.1"
+pandas = "^2.0.1"
+omegaconf = "^2.3.0"
+opencv-python = "^4.7.0"
+matplotlib = "^3.7.1"
 
 [tool.poetry.dev-dependencies]
 pysen = {version = "^0.10.3", extras = ["lint"]}
