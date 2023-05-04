@@ -1,3 +1,4 @@
 path_data: data
 path_garbage: garbage
 path_csv: result.csv
+path_skeletal: skeletal.npy
