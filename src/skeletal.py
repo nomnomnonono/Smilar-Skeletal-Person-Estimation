@@ -1,4 +1,3 @@
-import argparse
 import os
 
 import cv2
@@ -9,13 +8,39 @@ from omegaconf import OmegaConf
 
 
 class FaceMesh:
-    def __init__(self, config):
+    def __init__(self, config: str) -> None:
+        """
+        初期設定を行う
+
+        Args:
+            config (str): 設定ファイルパス
+        """
+
         self.config = OmegaConf.load(config)
         self.df = pd.read_csv(self.config.path_csv)
         if os.path.exists(self.config.path_skeletal):
             self.reference = np.load(self.config.path_skeletal)
 
-    def normalize(self, landmarks):
+    def create_dataset(self) -> None:
+        """フェイスメッシュデータセットの作成を行う"""
+
+        landmarks = []
+        for i in range(len(self.df)):
+            landmark = self.get_facemesh(self.df.iloc[i]["filepath"])
+            landmarks.append(landmark)
+        np.save(self.config.path_skeletal, np.array(landmarks))
+
+    def normalize(self, landmarks: list[list[float]]) -> np.ndarray:
+        """
+        顔ランドマークの正規化を行う
+
+        Args:
+            landmarks (list[list[float]]): 顔ランドマーク
+
+        Returns:
+            np.ndarray: 正規化後の顔ランドマーク
+        """
+
         output = []
         for landmark in landmarks:
             landmark = np.array(landmark)
@@ -23,7 +48,17 @@ class FaceMesh:
             output.append(landmark)
         return np.array(output)
 
-    def get_facemesh(self, path):
+    def get_facemesh(self, path: str) -> np.ndarray:
+        """
+        フェイスメッシュを獲得する
+
+        Args:
+            path (str): 画像ファイルパス
+
+        Returns:
+            np.ndarray: ファイスメッシュのランドマーク位置
+        """
+
         mp_face_mesh = mp.solutions.face_mesh
 
         with mp_face_mesh.FaceMesh(
@@ -44,15 +79,18 @@ class FaceMesh:
             landmark = self.normalize([x, y, z])
         return landmark
 
-    def create_dataset(self):
-        landmarks = []
-        for i in range(len(self.df)):
-            landmark = self.get_facemesh(self.df.iloc[i]["filepath"])
-            landmarks.append(landmark)
-        np.save(self.config.path_skeletal, np.array(landmarks))
+    def estimate_similar_person(self, path: str, topK: str) -> pd.DataFrame:
+        """
+        類似骨格人物を検索する
 
-    def estimate_similar_person(self, path, topK):
-        print(path)
+        Args:
+            path (str): 画像ファイルパス
+            topK (str): 上位何件を取得するか
+
+        Returns:
+            pd.DataFrame: 検索結果
+        """
+
         facemesh = self.get_facemesh(path)
         diff = abs(self.reference - facemesh).mean((1, 2))
         rank = np.argsort(diff)[0 : int(topK)]
@@ -60,20 +98,6 @@ class FaceMesh:
         return top.drop("filepath", axis=1)
 
 
-def argparser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-c",
-        "--config",
-        type=str,
-        default="config.yaml",
-        help="File path for config file.",
-    )
-    args = parser.parse_args()
-    return args
-
-
 if __name__ == "__main__":
-    args = argparser()
-    scraper = FaceMesh(args.config)
+    scraper = FaceMesh("config.yaml")
     scraper.create_dataset()
