@@ -1,4 +1,3 @@
-import argparse
 import glob
 import os
 import shutil
@@ -14,7 +13,14 @@ from omegaconf import OmegaConf
 
 
 class Scraper:
-    def __init__(self, config):
+    def __init__(self, config: str) -> None:
+        """
+        初期設定を行う
+
+        Args:
+            config (str): 設定ファイルパス
+        """
+
         self.config = OmegaConf.load(config)
         self.base_url = "https://hominis.media/person/"
         if os.path.exists(self.config.path_csv):
@@ -26,7 +32,9 @@ class Scraper:
         os.makedirs(self.config.path_data, exist_ok=True)
         os.makedirs(self.config.path_garbage, exist_ok=True)
 
-    def run(self):
+    def scrape(self) -> None:
+        """スクレイピングを実行する"""
+
         html = requests.get(self.base_url, timeout=5)
         soup = BeautifulSoup(html.content, "html.parser")
         pages = soup.find_all("input", class_="selectButton")
@@ -69,7 +77,9 @@ class Scraper:
 
         self.df.to_csv(self.config.path_csv, index=False)
 
-    def post_processing(self):
+    def post_processing(self) -> None:
+        """顔ランドマーク取得ができない画像を除去する"""
+
         mp_face_mesh = mp.solutions.face_mesh
         with mp_face_mesh.FaceMesh(
             static_image_mode=True,
@@ -100,27 +110,12 @@ class Scraper:
                 ].index.values[0]
             )
         self.df = self.df.drop(idx)
-        assert len(glob.glob(os.path.join(self.config.path_data, "*.png"))) == len(
-            self.df
-        )
+        valid_images = glob.glob(os.path.join(self.config.path_data, "*.png"))
+        assert len(valid_images) == len(self.df)
         self.df.to_csv(self.config.path_csv, index=False)
 
 
-def argparser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-c",
-        "--config",
-        type=str,
-        default="config.yaml",
-        help="File path for config file.",
-    )
-    args = parser.parse_args()
-    return args
-
-
 if __name__ == "__main__":
-    args = argparser()
-    scraper = Scraper(args.config)
-    scraper.run()
+    scraper = Scraper("config.yaml")
+    scraper.scrape()
     scraper.post_processing()
